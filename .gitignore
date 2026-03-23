@@ -6,15 +6,18 @@ node_modules
 .env
 .env.local
 .env.production
+.env*.local
 
 # Build outputs
 dist
 .next
 build
+out
 
 # Logs
 *.log
 npm-debug.log*
+pnpm-debug.log*
 
 # OS files
 .DS_Store
@@ -22,3 +25,9 @@ Thumbs.db
 
 # TypeScript
 *.tsbuildinfo
+
+# Prisma
+prisma/generated
+
+# pnpm
+.pnpm-debug.log
