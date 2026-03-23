@@ -1,0 +1,24 @@
+# Dependencies
+node_modules
+.pnpm-store
+
+# Environment files (NEVER commit these!)
+.env
+.env.local
+.env.production
+
+# Build outputs
+dist
+.next
+build
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# TypeScript
+*.tsbuildinfo
