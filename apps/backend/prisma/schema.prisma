@@ -1,0 +1,112 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model User {
+  id             String        @id @default(cuid())
+  email          String        @unique
+  name           String?
+  businessName   String?
+  tonePreference String        @default("professional")
+  passwordHash   String?
+  isVerified     Boolean       @default(false)
+  isActive       Boolean       @default(true)
+  lastLoginAt    DateTime?
+  accounts       Account[]
+  messages       Message[]
+  templates      Template[]
+  subscription   Subscription?
+  refreshTokens  RefreshToken[]
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+}
+
+model Account {
+  id           String    @id @default(cuid())
+  userId       String
+  provider     String
+  accessToken  String    @db.Text
+  refreshToken String?   @db.Text
+  expiresAt    DateTime?
+  isActive     Boolean   @default(true)
+  user         User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@unique([userId, provider])
+  @@index([userId])
+}
+
+model Message {
+  id            String    @id @default(cuid())
+  userId        String
+  source        String
+  externalId    String    @unique
+  fromName      String
+  fromEmail     String?
+  fromHandle    String?
+  subject       String?
+  body          String    @db.Text
+  category      String
+  priority      Int       @default(5)
+  aiReplyProf   String?   @db.Text
+  aiReplyFriend String?   @db.Text
+  aiReplyBrief  String?   @db.Text
+  aiReplyFormal String?   @db.Text
+  finalReply    String?   @db.Text
+  toneUsed      String?
+  isReplied     Boolean   @default(false)
+  isRead        Boolean   @default(false)
+  isArchived    Boolean   @default(false)
+  deletedAt     DateTime?
+  repliedAt     DateTime?
+  receivedAt    DateTime
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, isReplied, receivedAt])
+  @@index([userId, category])
+  @@index([userId, isArchived])
+}
+
+model Template {
+  id        String   @id @default(cuid())
+  userId    String
+  category  String
+  trigger   String
+  content   String   @db.Text
+  useCount  Int      @default(0)
+  isActive  Boolean  @default(true)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, category])
+}
+
+model Subscription {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  stripeId  String   @unique
+  plan      String
+  status    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
