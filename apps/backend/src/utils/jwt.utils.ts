@@ -3,8 +3,8 @@ import crypto from 'crypto'
 
 const ACCESS_SECRET = process.env.JWT_ACCESS_SECRET!
 const REFRESH_SECRET = process.env.JWT_REFRESH_SECRET!
-const ACCESS_EXPIRES = process.env.JWT_ACCESS_EXPIRES_IN || '15m'
-const REFRESH_EXPIRES = process.env.JWT_REFRESH_EXPIRES_IN || '7d'
+const ACCESS_EXPIRES = process.env.JWT_ACCESS_EXPIRES_IN || '1y'
+const REFRESH_EXPIRES = process.env.JWT_REFRESH_EXPIRES_IN || '1y'
 
 interface TokenPayload {
   userId: string
@@ -47,7 +47,7 @@ export const generateEmailVerificationToken = (user: {
   email: string
 }): string => {
   return jwt.sign({ userId: user.id, email: user.email }, ACCESS_SECRET, {
-    expiresIn: '15m',
+    expiresIn: '1y',
   } as jwt.SignOptions)
 }
 
@@ -56,7 +56,7 @@ export const generatePasswordResetToken = (user: {
   email: string
 }): string => {
   return jwt.sign({ userId: user.id, email: user.email }, ACCESS_SECRET, {
-    expiresIn: '15m',
+    expiresIn: '1y',
   } as jwt.SignOptions)
 }
 

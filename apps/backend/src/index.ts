@@ -9,6 +9,8 @@ import { PrismaClient } from '@prisma/client'
 import logger from './utils/logger'
 import { AppError } from '../src/utils/AppError'
 import authRouter from './modules/auth/auth.routes'
+import gmailRouter from './modules/gmail/gmail.routes'
+import messagesRouter from './modules/messages/messages.routes'
 
 
 // ─── Prisma Singleton ────────────────────────────────────────────────────────
@@ -79,7 +81,8 @@ app.get('/health', async (_req, res) => {
 
 // ─── TODO: Mount routers here ────────────────────────────────────────────────
 app.use('/api/auth', authRouter)
-// app.use('/api/messages', messagesRouter)
+app.use('/api/gmail', gmailRouter)
+app.use('/api/messages', messagesRouter)
 // app.use('/api/analytics', analyticsRouter)
 
 // ─── 404 Handler ─────────────────────────────────────────────────────────────
