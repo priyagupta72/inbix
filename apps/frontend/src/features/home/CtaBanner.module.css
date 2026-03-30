@@ -1,0 +1,76 @@
+/* ─────────────────────────────────────────────────────────────
+   components/home/CtaBanner.module.css
+───────────────────────────────────────────────────────────── */
+
+.ctaOuter {
+  padding: 0 5% 100px;
+}
+
+.ctaBanner {
+  background: linear-gradient(
+    135deg,
+    rgba(79, 124, 255, 0.12),
+    rgba(0, 229, 176, 0.06)
+  );
+  border: 1px solid rgba(79, 124, 255, 0.25);
+  border-radius: var(--radius-xl);
+  padding: 80px 48px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Background radial glow */
+.ctaGlow {
+  position: absolute;
+  top: -80px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 420px;
+  height: 220px;
+  background: radial-gradient(
+    ellipse,
+    rgba(79, 124, 255, 0.22),
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.ctaH2 {
+  position: relative;
+  z-index: 1;
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-weight: 800;
+  margin-bottom: 16px;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
+
+.ctaP {
+  position: relative;
+  z-index: 1;
+  color: var(--muted2);
+  font-size: 1rem;
+  margin-bottom: 36px;
+  font-weight: 400;
+}
+
+.ctaBanner :global(.btn) {
+  position: relative;
+  z-index: 1;
+}
+/* ─────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────── */
+@media (max-width: 767px) {
+  .ctaOuter   { padding: 0 4% 64px; }
+  .ctaBanner  { padding: 52px 24px; }
+}
+
+@media (max-width: 479px) {
+  .ctaBanner  { padding: 40px 18px; }
+  .ctaH2      { font-size: 1.6rem; }
+}

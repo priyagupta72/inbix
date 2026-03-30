@@ -47,6 +47,7 @@ router.post('/login/google', authLimiter, validate(googleLoginSchema), authContr
 router.post('/forgot-password', emailLimiter, validate(forgotPasswordSchema), authController.forgotPassword)
 router.post('/reset-password', authLimiter, validate(resetPasswordSchema), authController.resetPassword)
 router.get('/reset-password/:token', validate(validateResetTokenSchema, 'params'), authController.validateResetToken)
+router.post('/change-password', authenticate, authController.changePassword)
 
 // ── Token ─────────────────────────────────────────────────
 router.post('/refresh-token', validate(refreshTokenSchema), authController.refreshAccessToken)

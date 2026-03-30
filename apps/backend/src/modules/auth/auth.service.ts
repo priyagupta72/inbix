@@ -185,19 +185,32 @@ export const loginWithEmail = async (
 
 // ==================== GOOGLE OAUTH ====================
 
-export const loginWithGoogle = async (idToken: string, ipAddress: string) => {
+export const loginWithGoogle = async (accessToken: string, ipAddress: string) => {
   logger.info('Google OAuth login attempt')
 
-  let payload
-  try {
-    const ticket = await googleClient.verifyIdToken({
-      idToken,
-      audience: process.env.GOOGLE_CLIENT_ID!,
-    })
-    payload = ticket.getPayload()
-  } catch {
-    throw new AppError('Invalid Google token', 401)
+  type GoogleUserInfo = {
+    email?: string
+    name?: string
+    sub?: string
+    picture?: string
   }
+
+  let payload: GoogleUserInfo
+
+  const res = await fetch(
+    `https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=${accessToken}`
+  )
+
+  if (!res.ok) {
+    const errBody = await res.text()
+    logger.error('Google tokeninfo rejected', { status: res.status, body: errBody })
+    throw new AppError(`Invalid Google token: ${res.status} - ${errBody}`, 401)
+  }
+
+  payload = await res.json() as GoogleUserInfo
+  logger.info('Google tokeninfo received', { email: payload.email })
+
+  // ↑ STOP HERE — delete everything from the second "if (!res.ok)" down to here ↑
 
   if (!payload?.email) throw new AppError('Google token missing email', 401)
 
@@ -225,7 +238,7 @@ export const loginWithGoogle = async (idToken: string, ipAddress: string) => {
 
   await authRepository.updateLoginInfo(user.id)
 
-  const { accessToken, refreshToken } = generateTokenPair(user)
+  const { accessToken: newAccessToken, refreshToken } = generateTokenPair(user)
   await authRepository.addRefreshToken(user.id, refreshToken, calculateRefreshTokenExpiry())
 
   logger.info('Google OAuth login successful', { userId: user.id, isNewUser })
@@ -233,11 +246,10 @@ export const loginWithGoogle = async (idToken: string, ipAddress: string) => {
   return {
     message: isNewUser ? 'Account created successfully' : 'Login successful',
     user: sanitizeUser(user),
-    tokens: { accessToken, refreshToken },
+    tokens: { accessToken: newAccessToken, refreshToken },
     isNewUser,
   }
 }
-
 // ==================== PASSWORD MANAGEMENT ====================
 
 export const forgotPassword = async (email: string) => {
@@ -253,6 +265,13 @@ export const forgotPassword = async (email: string) => {
   }
 
   await sendPasswordResetEmail(user)
+    if (process.env.NODE_ENV === 'development') {
+    const resetToken = generatePasswordResetToken(user)
+    logger.info('DEV - Password reset link', {
+      url: `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}`,
+      token: resetToken,
+    })
+  }
 
   logger.info('Password reset email sent', { userId: user.id })
 
@@ -278,6 +297,19 @@ export const resetPassword = async (token: string, newPassword: string) => {
   logger.info('Password reset successful', { userId: user.id })
 
   return { message: 'Password reset successfully. Please login with your new password.' }
+}
+
+export const changePassword = async (userId: string, currentPassword: string, newPassword: string) => {
+  const user = await prisma.user.findUnique({ where: { id: userId } })
+  if (!user || !user.passwordHash) throw new Error('User not found')
+  
+  const isValid = await bcrypt.compare(currentPassword, user.passwordHash)
+  if (!isValid) throw new Error('Current password is incorrect')
+
+  const hash = await bcrypt.hash(newPassword, 12)
+  await prisma.user.update({ where: { id: userId }, data: { passwordHash: hash } })
+
+  return { message: 'Password updated successfully' }
 }
 
 export const validateResetToken = async (token: string) => {
@@ -339,6 +371,7 @@ const sanitizeUser = (user: {
   name: string | null
   businessName: string | null
   tonePreference: string
+  passwordHash: string | null
   isVerified: boolean
   createdAt: Date
 }) => ({
@@ -347,6 +380,7 @@ const sanitizeUser = (user: {
   name: user.name,
   businessName: user.businessName,
   tonePreference: user.tonePreference,
+   hasPassword: !!user.passwordHash,
   isVerified: user.isVerified,
   createdAt: user.createdAt,
 })

@@ -33,6 +33,16 @@ export const resendVerificationEmail = async (req: Request, res: Response, next:
     next(error)
   }
 }
+export const changePassword = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { currentPassword, newPassword } = req.body
+    const userId = req.user!.id
+    const result = await authService.changePassword(userId, currentPassword, newPassword)
+    sendSuccess(res, 200, result.message)
+  } catch (error) {
+    next(error)
+  }
+}
 
 export const loginWithEmail = async (req: Request, res: Response, next: NextFunction) => {
   try {
@@ -47,8 +57,13 @@ export const loginWithEmail = async (req: Request, res: Response, next: NextFunc
 
 export const loginWithGoogle = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const { idToken } = req.body
-    const result = await authService.loginWithGoogle(idToken, req.ip || '')
+    const { accessToken } = req.body  // ← was wrongly "userInfo"
+
+    if (!accessToken) {
+      return next(new Error('accessToken is missing from request body'))
+    }
+
+    const result = await authService.loginWithGoogle(accessToken, req.ip || '')
     const statusCode = result.isNewUser ? 201 : 200
     sendSuccess(res, statusCode, result.message, result)
   } catch (error) {

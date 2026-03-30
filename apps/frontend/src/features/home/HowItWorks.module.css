@@ -1,0 +1,86 @@
+/* ─────────────────────────────────────────────────────────────
+   components/home/HowItWorks.module.css
+───────────────────────────────────────────────────────────── */
+
+.howSection {
+  padding: 100px 5%;
+  background: var(--bg2);
+  border-top:    1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  position: relative;
+  z-index: 1;
+  scroll-margin-top: 80px;
+}
+
+.howInner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* ── Steps grid ── */
+.stepsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 40px 32px;
+  margin-top: 60px;
+}
+
+/* ── Single step ── */
+/* HowItWorks.module.css — update .stepCard */
+.stepCard {
+  position: relative;
+  padding: 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.stepNum {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  font-weight: 800;
+  color: rgba(79, 124, 255, 0.15);
+  line-height: 1;
+  margin-bottom: 12px;
+  letter-spacing: -0.03em;
+}
+
+.stepTitle {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.stepDesc {
+  color: var(--muted2);
+  font-size: 0.875rem;
+  line-height: 1.75;
+  font-weight: 400;
+}
+
+/* ─────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────── */
+
+/* md — 2 columns */
+@media (max-width: 1023px) {
+  .stepsGrid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px 24px;
+  }
+}
+
+/* sm — 1 column */
+@media (max-width: 639px) {
+  .howSection { padding: 64px 5%; }
+
+  .stepsGrid {
+    grid-template-columns: 1fr;
+    gap: 28px;
+    margin-top: 40px;
+  }
+
+  .stepNum  { font-size: 2.4rem; }
+}

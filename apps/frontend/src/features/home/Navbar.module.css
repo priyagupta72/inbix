@@ -1,0 +1,159 @@
+/* ─────────────────────────────────────────────────────────────
+   components/home/Navbar.module.css
+───────────────────────────────────────────────────────────── */
+
+/* ── Base nav ── */
+.nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5%;
+  height: 68px;
+  background: rgba(7, 8, 15, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  transition: background 0.3s ease;
+}
+
+.navScrolled {
+  background: rgba(7, 8, 15, 0.96);
+}
+
+/* ── Logo ── */
+.logo {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.2rem;
+  color: var(--text);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+}
+
+.logoIcon {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #4f7cff, #00e5b0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ── Desktop nav links ── */
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+  list-style: none;
+}
+
+.navLink {
+  color: var(--muted2);
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 400;
+  transition: color 0.2s;
+}
+.navLink:hover { color: var(--text); }
+
+/* ── Desktop CTAs ── */
+.navCtas {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+/* ── Hamburger (mobile only) ── */
+.hamburger {
+  display: none;
+  background: transparent;
+  border: none;
+  color: var(--muted2);
+  cursor: pointer;
+  padding: 4px;
+  transition: color 0.2s;
+}
+.hamburger:hover { color: var(--text); }
+
+/* ── Mobile drawer ── */
+.mobileDrawer {
+  position: fixed;
+  top: 68px;
+  left: 0; right: 0;
+  z-index: 99;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  padding: 24px 5% 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  transform: translateY(-110%);
+  opacity: 0;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.mobileDrawerOpen {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: all;
+}
+
+.mobileLinks {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mobileLink {
+  display: block;
+  padding: 12px 0;
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--muted2);
+  text-decoration: none;
+  border-bottom: 1px solid var(--border);
+  transition: color 0.2s;
+}
+.mobileLink:hover { color: var(--text); }
+
+.mobileCtas {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+/* ── Mobile overlay ── */
+.mobileOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 98;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+/* ─────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────── */
+
+/* md and below — hide desktop links/CTAs, show hamburger */
+@media (max-width: 767px) {
+  .navLinks  { display: none; }
+  .navCtas   { display: none; }
+  .hamburger { display: flex; }
+}
+
+/* sm — slightly tighter nav padding */
+@media (max-width: 479px) {
+  .nav  { padding: 0 4%; }
+  .logo { font-size: 1.05rem; }
+}

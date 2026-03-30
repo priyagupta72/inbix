@@ -50,13 +50,10 @@ export const loginSchema = z.object({
   password: z.string().min(1, 'Password is required'),
 })
 
+
 // ==================== GOOGLE OAUTH ====================
 export const googleLoginSchema = z.object({
-  idToken: z
-    .string()
-    .trim()
-    .min(1, 'Google ID token is required')
-    .max(4000, 'Google ID token exceeds maximum allowed length'),
+  accessToken: z.string().trim().min(1, 'Google access token is required'),
 })
 
 // ==================== PASSWORD MANAGEMENT ====================

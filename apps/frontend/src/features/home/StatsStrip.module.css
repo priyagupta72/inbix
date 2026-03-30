@@ -1,0 +1,76 @@
+/* ─────────────────────────────────────────────────────────────
+   components/home/StatsStrip.module.css
+───────────────────────────────────────────────────────────── */
+
+.strip {
+  display: flex;
+  justify-content: center;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.statItem {
+  flex: 1;
+  max-width: 260px;
+  text-align: center;
+  padding: 36px 24px;
+  border-right: 1px solid var(--border);
+}
+.statItem:last-child {
+  border-right: none;
+}
+
+.statNum {
+  font-family: var(--font-display);
+  font-size: 2.4rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.statLabel {
+  color: var(--muted);
+  font-size: 0.83rem;
+  margin-top: 6px;
+}
+
+/* ─────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────── */
+@media (max-width: 767px) {
+  .strip {
+    flex-wrap: wrap;
+  }
+
+  .statItem {
+    flex: 1 1 50%;
+    max-width: 50%;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* last row items — remove bottom border */
+  .statItem:nth-child(3),
+  .statItem:nth-child(4) {
+    border-bottom: none;
+  }
+
+  /* Restore divider between left and right in each row */
+  .statItem:nth-child(odd) {
+    border-right: 1px solid var(--border);
+  }
+}
+
+@media (max-width: 479px) {
+  .statItem {
+    flex: 1 1 100%;
+    max-width: 100%;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .statItem:last-child {
+    border-bottom: none;
+  }
+
+  .statNum { font-size: 2rem; }
+}

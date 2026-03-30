@@ -1,0 +1,315 @@
+/* ─────────────────────────────────────────────────────────────
+   components/home/Hero.module.css
+───────────────────────────────────────────────────────────── */
+
+/* ── Layout ── */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 140px 5% 80px;
+  overflow: hidden;
+}
+
+.heroGlow {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 500px;
+  background: radial-gradient(ellipse, rgba(79,124,255,0.13) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.heroContent {
+  position: relative;
+  z-index: 1;
+  max-width: 880px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ── Badge ── */
+.heroBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(79, 124, 255, 0.1);
+  border: 1px solid rgba(79, 124, 255, 0.3);
+  padding: 6px 18px;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  color: #93b4ff;
+  margin-bottom: 28px;
+  animation: fadeUp 0.6s ease both;
+}
+
+.heroBadgeDot {
+  width: 7px;
+  height: 7px;
+  background: #00e5b0;
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: pulse 2s infinite;
+}
+
+/* ── Headline ── */
+.heroH1 {
+  font-size: clamp(2.4rem, 6vw, 5rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  margin-bottom: 24px;
+  animation: fadeUp 0.6s 0.1s ease both;
+  line-height: 1.12;
+}
+
+/* ── Subheadline ── */
+.heroSub {
+  font-size: 1.1rem;
+  color: var(--muted2);
+  max-width: 580px;
+  margin: 0 auto 40px;
+  font-weight: 400;
+  line-height: 1.8;
+  animation: fadeUp 0.6s 0.2s ease both;
+}
+
+/* ── CTAs ── */
+.heroCtas {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+  animation: fadeUp 0.6s 0.3s ease both;
+}
+
+/* ─────────────────────────────────────────
+   PREVIEW MOCKUP
+───────────────────────────────────────── */
+.previewWrap {
+  margin-top: 64px;
+  position: relative;
+  animation: fadeUp 0.8s 0.45s ease both;
+}
+
+.previewGlow {
+  position: absolute;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80%;
+  height: 100px;
+  background: radial-gradient(ellipse, rgba(79,124,255,0.2), transparent 70%);
+  filter: blur(20px);
+  pointer-events: none;
+}
+
+.previewFrame {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  max-width: 900px;
+  margin: 0 auto;
+  box-shadow:
+    0 40px 80px rgba(0,0,0,0.5),
+    0 0 0 1px rgba(255,255,255,0.04);
+}
+
+/* Title bar */
+.previewBar {
+  background: var(--surface2);
+  padding: 12px 20px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border-bottom: 1px solid var(--border);
+}
+
+.previewDot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+  flex-shrink: 0;
+}
+.dotRed    { background: #ff5f57; }
+.dotYellow { background: #febc2e; }
+.dotGreen  { background: #28c840; }
+
+.previewUrl {
+  margin: 0 auto;
+  background: var(--bg2);
+  border-radius: 6px;
+  padding: 4px 14px;
+  font-size: 0.72rem;
+  color: var(--muted);
+  font-family: monospace;
+  letter-spacing: 0.01em;
+}
+
+/* Body grid */
+.previewBody {
+  display: grid;
+  grid-template-columns: 210px 1fr;
+  min-height: 280px;
+}
+
+/* ── Sidebar ── */
+.previewSidebar {
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  padding: 14px 10px;
+}
+
+.sidebarItem {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 8px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.77rem;
+  color: var(--muted2);
+  margin-bottom: 2px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+.sidebarItem:hover { background: rgba(255,255,255,0.04); }
+
+.sidebarItemActive {
+  background: rgba(79, 124, 255, 0.12);
+  color: #93b4ff;
+}
+
+.sidebarDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.sidebarLabel { flex: 1; }
+
+.sidebarCount {
+  margin-left: auto;
+  background: rgba(79, 124, 255, 0.15);
+  color: #93b4ff;
+  padding: 2px 8px;
+  border-radius: var(--radius-full);
+  font-size: 0.68rem;
+  flex-shrink: 0;
+}
+
+.sidebarDivider {
+  margin-top: 14px;
+  padding: 6px 10px;
+  font-size: 0.68rem;
+  color: var(--muted);
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.sidebarPlatformIcon {
+  color: var(--muted2);
+  display: flex;
+  align-items: center;
+}
+
+/* ── Message list ── */
+.previewMain {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.previewMsg {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 11px 14px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.previewAvatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.previewMsgInfo {
+  flex: 1;
+  overflow: hidden;
+}
+
+.previewMsgName {
+  font-family: var(--font-display);
+  font-weight: 600;
+  color: var(--text);
+  font-size: 0.82rem;
+  margin-bottom: 2px;
+}
+
+.previewMsgPreview {
+  color: var(--muted);
+  font-size: 0.73rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ── Tags ── */
+.tag {
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.68rem;
+  font-weight: 600;
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.tagUrgent  { background: rgba(239,68,68,0.15);  color: #f87171; }
+.tagPricing { background: rgba(245,158,11,0.15); color: #fbbf24; }
+.tagBooking { background: rgba(0,229,176,0.15);  color: #00e5b0; }
+
+/* ─────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────── */
+
+/* md — hide sidebar in preview */
+@media (max-width: 767px) {
+  .hero { padding: 120px 4% 60px; }
+
+  .previewBody {
+    grid-template-columns: 1fr;
+  }
+
+  .previewSidebar { display: none; }
+
+  .heroCtas { flex-direction: column; align-items: center; }
+  .heroCtas > * { width: 100%; max-width: 320px; justify-content: center; }
+}
+
+/* xs */
+@media (max-width: 479px) {
+  .hero         { padding: 110px 4% 48px; }
+  .heroH1       { font-size: 2rem; }
+  .heroSub      { font-size: 0.95rem; }
+  .heroBadge    { font-size: 0.73rem; }
+  .previewWrap  { margin-top: 40px; }
+}

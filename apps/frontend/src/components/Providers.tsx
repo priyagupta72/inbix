@@ -9,11 +9,16 @@ import { useState } from 'react'
 
 const theme = createTheme({
   palette: {
+    mode: 'dark',
+    background: {
+      default: '#07080f',
+      paper: '#111420',
+    },
     primary: {
-      main: '#6366F1',
+      main: '#4f7cff',
     },
     secondary: {
-      main: '#10B981',
+      main: '#00e5b0',
     },
   },
 })

@@ -1,0 +1,95 @@
+/* app/dashboard/analytics/analytics.module.css */
+
+.page { display: flex; flex-direction: column; gap: 24px; animation: fadeUp 0.4s ease both; }
+
+.header { margin-bottom: 4px; }
+.title { font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; color: var(--text); letter-spacing: -0.02em; margin-bottom: 4px; }
+.sub { font-size: 0.85rem; color: var(--muted2); }
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+.statCard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.statIcon { font-size: 1.3rem; }
+.statValue { font-family: var(--font-display); font-size: 1.8rem; font-weight: 800; color: var(--text); letter-spacing: -0.03em; }
+.statLabel { font-size: 0.78rem; color: var(--muted2); }
+
+.chartCard {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+}
+
+.chartHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.chartTitle { font-family: var(--font-display); font-size: 0.95rem; font-weight: 700; color: var(--text); }
+.chartSub { font-size: 0.75rem; color: var(--muted); }
+
+.chartEmpty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 48px 20px;
+  color: var(--muted);
+  font-size: 0.83rem;
+  text-align: center;
+}
+
+/* breakdown */
+.breakdown { display: flex; flex-direction: column; gap: 12px; }
+
+.breakdownRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.breakdownLabel { font-size: 0.8rem; color: var(--muted2); width: 80px; flex-shrink: 0; }
+
+.breakdownBar {
+  flex: 1;
+  height: 6px;
+  background: var(--surface2);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.breakdownFill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.6s ease;
+}
+
+.breakdownPct { font-size: 0.75rem; color: var(--muted); width: 32px; text-align: right; flex-shrink: 0; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+  .statsGrid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .statsGrid { grid-template-columns: 1fr 1fr; }
+}

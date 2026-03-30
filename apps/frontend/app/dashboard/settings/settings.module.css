@@ -1,0 +1,210 @@
+/* app/dashboard/settings/settings.module.css */
+
+.page { display: flex; flex-direction: column; gap: 32px; animation: fadeUp 0.4s ease both; }
+
+.header { margin-bottom: 4px; }
+.title { font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; color: var(--text); letter-spacing: -0.02em; margin-bottom: 4px; }
+.sub { font-size: 0.85rem; color: var(--muted2); }
+
+/* ── Section ── */
+.section { display: flex; flex-direction: column; gap: 14px; }
+
+.sectionTitle { font-family: var(--font-display); font-size: 1rem; font-weight: 700; color: var(--text); }
+.sectionSub { font-size: 0.82rem; color: var(--muted2); margin-top: -8px; }
+
+/* ── Integration cards ── */
+.integrationCard {
+  display: flex; align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 16px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  transition: border-color 0.15s;
+}
+.integrationCard:hover { border-color: rgba(255,255,255,0.1); }
+.integrationDisabled { opacity: 0.6; }
+
+.integrationLeft { display: flex; align-items: center; gap: 14px; }
+
+.integrationIcon {
+  width: 38px; height: 38px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+}
+
+.integrationName { font-size: 0.88rem; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+.integrationDesc { font-size: 0.77rem; color: var(--muted2); }
+
+.integrationRight { display: flex; align-items: center; gap: 10px; }
+
+.connectedBadge {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 4px 12px;
+  background: rgba(0,229,176,0.1);
+  border: 1px solid rgba(0,229,176,0.2);
+  border-radius: var(--radius-full);
+  font-size: 0.75rem; font-weight: 600; color: var(--accent2);
+}
+
+.connectedDot {
+  width: 6px; height: 6px;
+  background: var(--accent2);
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+.disconnectBtn {
+  padding: 6px 14px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 0.78rem; font-weight: 500;
+  color: var(--muted2); cursor: pointer;
+  font-family: var(--font-body);
+  transition: all 0.15s;
+}
+.disconnectBtn:hover { border-color: #f87171; color: #f87171; }
+
+.connectBtn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 18px;
+  background: var(--accent); color: #fff;
+  border: none; border-radius: var(--radius-sm);
+  font-size: 0.82rem; font-weight: 600;
+  cursor: pointer; font-family: var(--font-body);
+  transition: all 0.2s;
+  box-shadow: 0 0 16px rgba(79,124,255,0.25);
+  white-space: nowrap;
+}
+.connectBtn:hover { background: #6b8fff; transform: translateY(-1px); }
+
+.comingSoonBadge {
+  padding: 3px 10px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  font-size: 0.68rem; font-weight: 600; color: var(--muted);
+}
+
+/* ── Profile form ── */
+.formGrid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+.field { display: flex; flex-direction: column; gap: 6px; }
+.label { font-size: 0.78rem; font-weight: 600; color: var(--muted2); }
+.optional { font-weight: 400; color: var(--muted); }
+
+.input {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 9px 12px;
+  color: var(--text);
+  font-size: 0.875rem;
+  font-family: var(--font-body);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+.input::placeholder { color: var(--muted); }
+.input:focus {
+  border-color: rgba(79,124,255,0.5);
+  box-shadow: 0 0 0 3px rgba(79,124,255,0.1);
+}
+
+/* ── Tone grid ── */
+.toneGrid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+
+.toneCard {
+  position: relative;
+  display: flex; flex-direction: column; gap: 5px;
+  padding: 14px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  cursor: pointer; text-align: left;
+  font-family: var(--font-body);
+  transition: all 0.15s;
+}
+.toneCard:hover { border-color: rgba(79,124,255,0.3); }
+
+.toneCardActive {
+  border-color: rgba(79,124,255,0.6);
+  background: rgba(79,124,255,0.08);
+}
+
+.toneName { font-size: 0.85rem; font-weight: 700; color: var(--text); font-family: var(--font-display); }
+.toneDesc { font-size: 0.73rem; color: var(--muted2); line-height: 1.4; }
+
+.toneCheck {
+  position: absolute; top: 10px; right: 10px;
+  width: 18px; height: 18px;
+  background: var(--accent);
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* ── Save ── */
+.saveRow { padding-top: 8px; }
+
+.saveBtn {
+  display: inline-flex; align-items: center; gap: 7px;
+  padding: 10px 24px;
+  background: var(--accent); color: #fff;
+  border: none; border-radius: var(--radius-sm);
+  font-size: 0.88rem; font-weight: 600;
+  cursor: pointer; font-family: var(--font-body);
+  transition: all 0.2s;
+  box-shadow: 0 0 20px rgba(79,124,255,0.25);
+}
+.saveBtn:hover { background: #6b8fff; transform: translateY(-1px); }
+
+.sectionRow {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.changePassBtn {
+  padding: 8px 16px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  color: rgba(255,255,255,0.7);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+
+.changePassBtn:hover {
+  background: rgba(255,255,255,0.1);
+  color: #fff;
+}
+
+.changePassExpand {
+  margin-top: 20px;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.5; transform: scale(1.3); }
+}
+
+@media (max-width: 768px) {
+  .toneGrid  { grid-template-columns: repeat(2, 1fr); }
+  .formGrid  { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .toneGrid  { grid-template-columns: 1fr 1fr; }
+  .integrationCard { flex-direction: column; align-items: flex-start; }
+}
