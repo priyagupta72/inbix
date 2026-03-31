@@ -13,7 +13,12 @@
   position: relative;
   z-index: 1;
 }
-
+.footerLogoIcon {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 6px;
+  vertical-align: middle;
+}
 .footerLogo {
   font-family: var(--font-display);
   font-weight: 700;

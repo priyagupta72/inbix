@@ -110,7 +110,7 @@ export default function Hero() {
               <span className={`${styles.previewDot} ${styles.dotRed}`}    />
               <span className={`${styles.previewDot} ${styles.dotYellow}`} />
               <span className={`${styles.previewDot} ${styles.dotGreen}`}  />
-              <span className={styles.previewUrl}>app.inbix.io/inbox</span>
+             <span className={styles.previewUrl}>inbix.onrender.com/inbox</span>
             </div>
 
             {/* Body: sidebar + messages */}

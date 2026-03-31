@@ -5,6 +5,7 @@
 
 import Link from "next/link";
 import styles from "./Footer.module.css";
+import { LogoIcon } from "./icons/Icons"; 
 
 const FOOTER_LINKS = ["Privacy", "Terms", "Docs", "Contact"] as const;
 
@@ -12,8 +13,11 @@ export default function Footer() {
   return (
     <footer className={styles.footer}>
       <Link href="/" className={styles.footerLogo}>
-        inbix
-      </Link>
+  <span className={styles.footerLogoIcon}>
+    <LogoIcon size={18} />
+  </span>
+  inbix
+</Link>
 
       <nav className={styles.footerLinks} aria-label="Footer navigation">
         {FOOTER_LINKS.map((label) => (
@@ -24,8 +28,8 @@ export default function Footer() {
       </nav>
 
       <span className={styles.footerCopy}>
-        © 2026 inbix. Built with Next.js
-      </span>
+  © {new Date().getFullYear()} inbix. All rights reserved. Built by Priya Gupta.
+</span>
     </footer>
   );
 }

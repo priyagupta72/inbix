@@ -12,32 +12,47 @@ const STEPS = [
   {
     num:   "01",
     title: "Message arrives",
-    desc:  "Customer sends email to Gmail or a DM on Instagram / Facebook.",
+    desc:  "Customer sends an email to your connected Gmail inbox.",
   },
   {
     num:   "02",
-    title: "Webhook triggers n8n",
-    desc:  "Gmail / Meta API fires a webhook — the automation pipeline kicks off instantly.",
+    title: "inbix fetches it",
+    desc:  "inbix pulls unread emails from Gmail in real time using the Gmail API.",
   },
   {
     num:   "03",
-    title: "Queued & stored",
-    desc:  "n8n reads the message, saves to PostgreSQL, and adds it to the Redis Bull queue.",
+    title: "Stored securely",
+    desc:  "Message is saved to your private database, only you can see it.",
   },
   {
     num:   "04",
     title: "AI categorizes",
-    desc:  "GPT-4o reads and assigns a category — urgent, pricing, booking, FAQ, complaint, or spam.",
+    desc:  "AI reads the message and assigns a category, urgent, pricing, booking, FAQ, complaint, or spam.",
   },
   {
     num:   "05",
     title: "Draft generated",
-    desc:  "GPT-4o writes a reply in your chosen tone and stores it against the message in the DB.",
+    desc:  "AI writes a reply in your chosen tone, professional, friendly, brief, or formal.",
   },
   {
     num:   "06",
+    title: "Create templates",
+    desc:  "Save reply templates for common questions, inbix auto-matches them to incoming messages by category.",
+  },
+  {
+    num:   "07",
+    title: "Bulk reply",
+    desc:  "Select multiple messages and send AI-generated replies to all of them in one click.",
+  },
+  {
+    num:   "08",
     title: "You review & send",
-    desc:  "Dashboard updates in real-time. Edit the draft, switch tone, and hit send — one click.",
+    desc:  "Edit the draft, switch tone, regenerate if needed, then send with one click.",
+  },
+  {
+    num:   "09",
+    title: "Archive & organise",
+    desc:  "Archive messages you're done with, keep your inbox clean and focused on what needs attention.",
   },
 ] as const;
 
