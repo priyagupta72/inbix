@@ -24,8 +24,6 @@ const googleClient = new OAuth2Client(process.env.GOOGLE_CLIENT_ID!)
 
 // ==================== REGISTER ====================
 
-// ==================== REGISTER ====================
-
 export const register = async (data: {
   name: string
   email: string
@@ -119,7 +117,7 @@ export const verifyEmail = async (token: string) => {
   logger.info('Email verified successfully', { userId: verifiedUser.id })
 
   return {
-    message: 'Email verified successfully. Welcome to ReplyEngine!',
+    message: 'Email verified successfully. Welcome to inbix!',
     user: sanitizeUser(verifiedUser),
     tokens: { accessToken, refreshToken },
     alreadyVerified: false,
@@ -198,8 +196,9 @@ export const loginWithGoogle = async (accessToken: string, ipAddress: string) =>
   let payload: GoogleUserInfo
 
   const res = await fetch(
-    `https://www.googleapis.com/oauth2/v3/tokeninfo?access_token=${accessToken}`
-  )
+  `https://www.googleapis.com/oauth2/v3/userinfo`,
+  { headers: { Authorization: `Bearer ${accessToken}` } }
+)
 
   if (!res.ok) {
     const errBody = await res.text()
@@ -214,7 +213,12 @@ export const loginWithGoogle = async (accessToken: string, ipAddress: string) =>
 
   if (!payload?.email) throw new AppError('Google token missing email', 401)
 
-  const { email, name, sub: googleId } = payload
+  const fullName = (payload as any).given_name && (payload as any).family_name
+  ? `${(payload as any).given_name} ${(payload as any).family_name}`
+  : payload.name || (payload.email || '').split('@')[0]
+
+const { email, sub: googleId } = payload
+const name = fullName
 
   let user = await authRepository.findUserByEmail(email)
   let isNewUser = false

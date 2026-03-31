@@ -119,3 +119,10 @@
 @media (max-width: 640px) {
   .formRow { grid-template-columns: 1fr; }
 }
+
+.useCount {
+  font-size: 0.7rem;
+  color: var(--muted);
+  margin-left: auto;
+  margin-right: 8px;
+}

@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-  title: 'ReplyEngine',
+  title: 'inbix',
   description: 'AI-powered inbox management',
 }
 

@@ -14,7 +14,7 @@ import Footer from "@/features/home/Footer";
 import Navbar from "@/features/home/Navbar";
 
 export const metadata = {
-  title:       "ReplyEngine — AI Inbox Management",
+  title:       "inbix — AI Inbox Management",
   description: "Reply to 100+ messages in under 10 minutes. AI-powered inbox management for Gmail, Instagram & Facebook.",
 };
 

@@ -16,7 +16,7 @@ const logFormat = printf(({ level, message, timestamp, stack, ...metadata }) => 
 const logger = winston.createLogger({
   level: process.env.LOG_LEVEL || 'info',
   defaultMeta: {
-    service: 'reply-engine-backend',
+    service: 'inbix-backend',
     environment: process.env.NODE_ENV || 'development'
   },
   format: combine(

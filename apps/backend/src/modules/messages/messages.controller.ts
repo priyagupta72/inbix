@@ -5,14 +5,16 @@ import { sendSuccess } from '../../utils/response'
 export const getMessages = async (req: Request, res: Response, next: NextFunction) => {
   try {
     const userId = req.user!.id
-    const { category, isReplied, isArchived, page, limit } = req.query as any
-    const result = await messagesService.getMessages(userId, {
-      category,
-      isReplied,
-      isArchived,
-      page: Number(page) || 1,
-      limit: Number(limit) || 20,
-    })
+const { category, isReplied, isArchived, page, limit } = req.query as any
+const isArchivedBool = isArchived === "true" ? true : isArchived === "false" ? false : undefined
+const isRepliedBool  = isReplied  === "true" ? true : isReplied  === "false" ? false : undefined
+const result = await messagesService.getMessages(userId, {
+  category,
+  isReplied:  isRepliedBool,
+  isArchived: isArchivedBool,
+  page:  Number(page)  || 1,
+  limit: Number(limit) || 20,
+})
     sendSuccess(res, 200, 'Messages retrieved', result)
   } catch (error) {
     next(error)

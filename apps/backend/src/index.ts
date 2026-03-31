@@ -11,6 +11,8 @@ import { AppError } from '../src/utils/AppError'
 import authRouter from './modules/auth/auth.routes'
 import gmailRouter from './modules/gmail/gmail.routes'
 import messagesRouter from './modules/messages/messages.routes'
+import templateRoutes from './modules/templates/templates.routes'
+import settingsRoutes from './modules/settings/settings.routes'
 
 
 // ─── Prisma Singleton ────────────────────────────────────────────────────────
@@ -65,14 +67,14 @@ app.get('/health', async (_req, res) => {
     await prisma.$queryRaw`SELECT 1`
     res.json({
       status: 'ok',
-      service: 'reply-engine-backend',
+      service: 'inbix-backend',
       database: 'connected',
       timestamp: new Date().toISOString(),
     })
   } catch {
     res.status(503).json({
       status: 'error',
-      service: 'reply-engine-backend',
+      service: 'inbix-backend',
       database: 'disconnected',
       timestamp: new Date().toISOString(),
     })
@@ -83,6 +85,8 @@ app.get('/health', async (_req, res) => {
 app.use('/api/auth', authRouter)
 app.use('/api/gmail', gmailRouter)
 app.use('/api/messages', messagesRouter)
+app.use('/api/templates', templateRoutes)
+app.use('/api/settings', settingsRoutes)
 // app.use('/api/analytics', analyticsRouter)
 
 // ─── 404 Handler ─────────────────────────────────────────────────────────────
@@ -123,12 +127,12 @@ async function bootstrap() {
     // Verify DB connection before accepting traffic
     await prisma.$connect()
     logger.info('Database connected successfully', {
-      service: 'reply-engine-backend',
+      service: 'inbix-backend',
     })
 
     const server = app.listen(PORT, () => {
-      logger.info(' ReplyEngine Backend Server started', {
-        service: 'reply-engine-backend',
+      logger.info(' inbix Backend Server started', {
+        service: 'inbix-backend',
         environment: process.env.NODE_ENV || 'development',
         port: PORT,
         url: `http://localhost:${PORT}`,

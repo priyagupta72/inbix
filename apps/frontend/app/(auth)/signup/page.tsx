@@ -119,14 +119,20 @@ const handleGoogle = async () => {
       <div className={styles.grid}       aria-hidden="true" />
 
       <Link href="/" className={styles.logo}>
-        <span className={styles.logoIcon}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
-              stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </span>
-        ReplyEngine
-      </Link>
+  <span className={styles.logoIcon}>
+    <svg width="20" height="20" viewBox="0 0 34 34" fill="none">
+      <defs>
+        <linearGradient id="inbix-g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#4f7cff" />
+          <stop offset="100%" stopColor="#00e5b0" />
+        </linearGradient>
+      </defs>
+      <rect width="34" height="34" rx="8" fill="url(#inbix-g)" />
+      <path d="M17 6 L12 17 L17 17 L13 28 L25 17 L20 17 Z" fill="#07080f" />
+    </svg>
+  </span>
+  inbix
+</Link>
 
       <div className={styles.card}>
         <div className={styles.cardGlow} aria-hidden="true" />

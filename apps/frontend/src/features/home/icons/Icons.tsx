@@ -120,9 +120,29 @@ export const IconClose = ({ size = 22 }: { size?: number }) => (
   </svg>
 );
 
-export const LogoIcon = ({ size = 20 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none"
-    stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
-  </svg>
-);
+// components/home/icons/Icons.tsx
+// Replace your LogoIcon with this:
+
+export function LogoIcon({ size = 18 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 34 34"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <defs>
+        <linearGradient id="inbix-g" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#4f7cff" />
+          <stop offset="100%" stopColor="#00e5b0" />
+        </linearGradient>
+      </defs>
+      <rect width="34" height="34" rx="8" fill="url(#inbix-g)" />
+      <path
+        d="M17 6 L12 17 L17 17 L13 28 L25 17 L20 17 Z"
+        fill="#07080f"
+      />
+    </svg>
+  );
+}

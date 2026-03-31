@@ -10,6 +10,7 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { isLoggedIn, getUser, logout } from '@/lib/auth';
 import styles from './layout.module.css';
+import { apiFetch } from "@/lib/api";
 
 const NAV = [
   {
@@ -94,7 +95,8 @@ export default function DashboardLayout({
   const pathname = usePathname();
   const router = useRouter();
   const [mobile, setMobile] = useState(false);
- const [user, setUser] = useState<{ name?: string; plan?: string } | null>(null);
+ const [user, setUser] = useState<{ name?: string; email?: string; plan?: string } | null>(null);
+const [unreadCount, setUnreadCount] = useState(0);
 
 // WITH THIS:
 const [mounted, setMounted] = useState(false);
@@ -103,9 +105,14 @@ useEffect(() => {
   setMounted(true);
   if (!isLoggedIn()) {
     router.replace("/signin");
-  } else {
-    setUser(getUser());
+    return;
   }
+  setUser(getUser());
+
+  // Fetch real unread count from backend
+  apiFetch("/api/messages?isReplied=false")
+    .then((res) => setUnreadCount(res.data?.total ?? 0))
+    .catch(() => {});
 }, []);
 
 if (!mounted) return null;
@@ -123,17 +130,18 @@ if (!mounted) return null;
         {/* Logo */}
         <Link href="/dashboard" className={styles.logo}>
           <span className={styles.logoIcon}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-              <path
-                d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
-                stroke="white"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+            <svg width="16" height="16" viewBox="0 0 34 34" fill="none">
+  <defs>
+    <linearGradient id="inbix-g" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stopColor="#4f7cff" />
+      <stop offset="100%" stopColor="#00e5b0" />
+    </linearGradient>
+  </defs>
+  <rect width="34" height="34" rx="8" fill="url(#inbix-g)" />
+  <path d="M17 6 L12 17 L17 17 L13 28 L25 17 L20 17 Z" fill="#07080f" />
+</svg>
           </span>
-          <span className={styles.logoText}>ReplyEngine</span>
+          <span className={styles.logoText}>inbix</span>
         </Link>
 
         {/* Nav */}
@@ -150,9 +158,9 @@ if (!mounted) return null;
               >
                 <span className={styles.navIcon}>{item.icon}</span>
                 {item.label}
-                {item.label === 'Inbox' && (
-                  <span className={styles.navBadge}>12</span>
-                )}
+                {item.label === 'Inbox' && unreadCount > 0 && (
+  <span className={styles.navBadge}>{unreadCount}</span>
+)}
               </Link>
             );
           })}
@@ -180,7 +188,7 @@ if (!mounted) return null;
       {user?.name?.charAt(0)?.toUpperCase() || '?'}
     </div>
     <div className={styles.userInfo}>
-      <span className={styles.userName}>{user?.name || 'User'}</span>
+      <span className={styles.userName}>{user?.name || user?.email || 'User'}</span>
       <span className={styles.userPlan}>
         {user?.plan || 'Free plan'}
       </span>
@@ -225,7 +233,19 @@ if (!mounted) return null;
               <line x1="3" y1="18" x2="21" y2="18" />
             </svg>
           </button>
-          <span className={styles.topbarLogo}>ReplyEngine</span>
+         <span className={styles.topbarLogo} style={{ display: "flex", alignItems: "center", gap: 8 }}>
+  <svg width="22" height="22" viewBox="0 0 34 34" fill="none">
+    <defs>
+      <linearGradient id="inbix-g-top" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stopColor="#4f7cff" />
+        <stop offset="100%" stopColor="#00e5b0" />
+      </linearGradient>
+    </defs>
+    <rect width="34" height="34" rx="8" fill="url(#inbix-g-top)" />
+    <path d="M17 6 L12 17 L17 17 L13 28 L25 17 L20 17 Z" fill="#07080f" />
+  </svg>
+  inbix
+</span>
         </header>
 
         <div className={styles.content}>{children}</div>

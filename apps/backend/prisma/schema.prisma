@@ -66,6 +66,8 @@ model Message {
   isArchived    Boolean   @default(false)
   deletedAt     DateTime?
   repliedAt     DateTime?
+  threadId     String?   // Gmail thread ID for grouping
+  rawMessageId String?   // RFC 2822 Message-ID header for In-Reply-To
   receivedAt    DateTime
   user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
 

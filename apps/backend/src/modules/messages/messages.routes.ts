@@ -26,7 +26,7 @@ router.get('/:id', messagesController.getMessage)
 router.get('/:id/tone/:tone', messagesController.getToneVariant)
 
 // ── Reply ─────────────────────────────────────────────────
-router.post('/:id/reply', validate(sendReplySchema), messagesController.sendReply)
+router.patch('/:id/reply', validate(sendReplySchema), messagesController.sendReply)
 router.post('/bulk-reply', validate(bulkReplySchema), messagesController.bulkSendReplies)
 
 // ── Actions ───────────────────────────────────────────────

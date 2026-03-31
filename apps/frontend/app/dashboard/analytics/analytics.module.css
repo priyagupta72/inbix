@@ -82,6 +82,34 @@
 
 .breakdownPct { font-size: 0.75rem; color: var(--muted); width: 32px; text-align: right; flex-shrink: 0; }
 
+/* Volume bar chart */
+.volumeChart {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 120px;
+  padding-top: 8px;
+}
+
+.volumeBarWrap {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+}
+
+.volumeBar {
+  width: 100%;
+  background: var(--accent, #6366f1);
+  border-radius: 2px 2px 0 0;
+  transition: height 0.4s ease;
+  opacity: 0.8;
+}
+
+.volumeBar:hover {
+  opacity: 1;
+}
+
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }

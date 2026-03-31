@@ -17,10 +17,12 @@ const gmailLimiter = rateLimit({
 // ── Gmail OAuth ───────────────────────────────────────────
 router.get('/auth', authenticate, gmailController.getAuthUrl)
 router.get('/callback', validate(connectGmailSchema, 'query'), gmailController.connectGmail)
+router.get('/status', authenticate, gmailController.getGmailStatus)      // ← ADD
 
 // ── Email Operations ──────────────────────────────────────
 router.post('/fetch', authenticate, gmailLimiter, gmailController.fetchEmails)
 router.post('/reply/:messageId', authenticate, validate(sendReplySchema), gmailController.sendReply)
 router.delete('/disconnect', authenticate, gmailController.disconnectGmail)
+router.get('/analytics', authenticate, gmailController.getAnalyticsHandler)
 
 export default router

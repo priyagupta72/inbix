@@ -36,15 +36,15 @@
   flex-shrink: 0;
 }
 
+/* Navbar.module.css — update this */
 .logoIcon {
   width: 34px;
   height: 34px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #4f7cff, #00e5b0);
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  /* remove the background gradient — SVG handles it now */
 }
 
 /* ── Desktop nav links ── */

@@ -1,8 +1,8 @@
 "use client";
 
-/* app/dashboard/templates/page.tsx */
-
 import { useState } from "react";
+import useSWR from "swr";
+import { apiFetch } from "@/lib/api";
 import styles from "./templates.module.css";
 
 type Template = {
@@ -10,13 +10,8 @@ type Template = {
   category: string;
   trigger: string;
   content: string;
+  useCount: number;
 };
-
-const DEFAULT_TEMPLATES: Template[] = [
-  { id: "1", category: "FAQ",     trigger: "hours",    content: "Thanks for reaching out! Our support hours are Monday–Friday, 9am–6pm EST. We'll get back to you as soon as possible." },
-  { id: "2", category: "Booking", trigger: "schedule", content: "I'd love to connect! You can book a time directly on my calendar here: [CALENDLY_LINK]. Looking forward to speaking with you." },
-  { id: "3", category: "Pricing", trigger: "rates",    content: "Great question! Here's a link to our pricing page: [PRICING_LINK]. Happy to walk you through options on a quick call too." },
-];
 
 const CATEGORY_COLORS: Record<string, string> = {
   FAQ:       "#93b4ff",
@@ -24,26 +19,41 @@ const CATEGORY_COLORS: Record<string, string> = {
   Pricing:   "#fbbf24",
   Urgent:    "#f87171",
   Complaint: "#f87171",
+  Spam:      "#6b7280",
 };
 
+const fetcher = (url: string) => apiFetch(url).then((r) => r.data);
+
 export default function TemplatesPage() {
-  const [templates, setTemplates] = useState([...DEFAULT_TEMPLATES]);
-  const [showNew, setShowNew]     = useState(false);
-  const [newCat, setNewCat]       = useState("FAQ");
+  const [showNew, setShowNew]       = useState(false);
+  const [newCat, setNewCat]         = useState("FAQ");
   const [newTrigger, setNewTrigger] = useState("");
   const [newContent, setNewContent] = useState("");
+  const [saving, setSaving]         = useState(false);
 
-  const handleAdd = () => {
+  const { data, mutate } = useSWR("/api/templates", fetcher);
+  const templates: Template[] = data?.templates ?? [];
+
+  const handleAdd = async () => {
     if (!newTrigger || !newContent) return;
-    setTemplates((prev) => [
-      ...prev,
-      { id: Date.now().toString(), category: newCat, trigger: newTrigger, content: newContent },
-    ]);
-    setNewTrigger(""); setNewContent(""); setShowNew(false);
+    setSaving(true);
+    try {
+      await apiFetch("/api/templates", {
+        method: "POST",
+        body: JSON.stringify({ category: newCat, trigger: newTrigger, content: newContent }),
+      });
+      await mutate();
+      setNewTrigger(""); setNewContent(""); setShowNew(false);
+    } catch (err) {
+    } finally {
+      setSaving(false);
+    }
   };
 
-  const handleDelete = (id: string) =>
-    setTemplates((prev) => prev.filter((t) => t.id !== id));
+  const handleDelete = async (id: string) => {
+    await apiFetch(`/api/templates/${id}`, { method: "DELETE" });
+    await mutate();
+  };
 
   return (
     <div className={styles.page}>
@@ -60,7 +70,6 @@ export default function TemplatesPage() {
         </button>
       </div>
 
-      {/* New template form */}
       {showNew && (
         <div className={styles.newCard}>
           <div className={styles.newCardHeader}>
@@ -89,22 +98,30 @@ export default function TemplatesPage() {
           </div>
           <div className={styles.formActions}>
             <button className={styles.cancelBtn} onClick={() => setShowNew(false)}>Cancel</button>
-            <button className={styles.saveBtn} onClick={handleAdd}>Save template</button>
+            <button className={styles.saveBtn} onClick={handleAdd} disabled={saving}>
+              {saving ? "Saving..." : "Save template"}
+            </button>
           </div>
         </div>
       )}
 
-      {/* Template list */}
       <div className={styles.list}>
-        {templates.map((t) => (
+        {templates.length === 0 ? (
+          <div style={{ padding: "60px 20px", textAlign: "center", color: "var(--muted)", fontSize: "0.875rem" }}>
+            No templates yet — create your first one!
+          </div>
+        ) : templates.map((t) => (
           <div key={t.id} className={styles.card}>
             <div className={styles.cardTop}>
               <span className={styles.cardCategory}
                 style={{ color: CATEGORY_COLORS[t.category] ?? "#93b4ff",
-                         background: `${CATEGORY_COLORS[t.category] ?? "#93b4ff"}18` }}>
+                         background: `${CATEGORY_COLORS[t.category] ?? "#93b4ff"}26` }}>
                 {t.category}
               </span>
               <span className={styles.cardTrigger}>keyword: <b>{t.trigger}</b></span>
+              {t.useCount > 0 && (
+                <span className={styles.useCount}>used {t.useCount}×</span>
+              )}
               <button className={styles.deleteBtn} onClick={() => handleDelete(t.id)} title="Delete">
                 <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14H6L5 6"/>

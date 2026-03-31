@@ -66,13 +66,11 @@
 .logoIcon {
   width: 34px;
   height: 34px;
-  background: linear-gradient(135deg, var(--accent), var(--accent2));
-  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  box-shadow: 0 0 20px rgba(79,124,255,0.3);
+  /* remove background: linear-gradient(...) if present */
 }
 
 .card {

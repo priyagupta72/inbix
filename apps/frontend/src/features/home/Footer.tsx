@@ -12,7 +12,7 @@ export default function Footer() {
   return (
     <footer className={styles.footer}>
       <Link href="/" className={styles.footerLogo}>
-        ReplyEngine
+        inbix
       </Link>
 
       <nav className={styles.footerLinks} aria-label="Footer navigation">
@@ -24,7 +24,7 @@ export default function Footer() {
       </nav>
 
       <span className={styles.footerCopy}>
-        © 2026 ReplyEngine. Built with Next.js
+        © 2026 inbix. Built with Next.js
       </span>
     </footer>
   );

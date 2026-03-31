@@ -86,7 +86,7 @@ export default function Hero() {
 
         {/* Subheadline */}
         <p className={styles.heroSub}>
-          ReplyEngine reads your Gmail, Instagram &amp; Facebook DMs, categorizes every
+          inbix reads your Gmail, Instagram &amp; Facebook DMs, categorizes every
           message, drafts AI replies in your tone — and lets you send them all with one click.
         </p>
 
@@ -110,7 +110,7 @@ export default function Hero() {
               <span className={`${styles.previewDot} ${styles.dotRed}`}    />
               <span className={`${styles.previewDot} ${styles.dotYellow}`} />
               <span className={`${styles.previewDot} ${styles.dotGreen}`}  />
-              <span className={styles.previewUrl}>app.replyengine.io/inbox</span>
+              <span className={styles.previewUrl}>app.inbix.io/inbox</span>
             </div>
 
             {/* Body: sidebar + messages */}

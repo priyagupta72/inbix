@@ -37,7 +37,7 @@ export default function Navbar() {
           <span className={styles.logoIcon}>
             <LogoIcon size={18} />
           </span>
-          ReplyEngine
+          inbix
         </Link>
 
         {/* Desktop links */}
